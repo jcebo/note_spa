@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Roboto+Slab:wght@500&display=swap');
+@import 'bootstrap-icons';
+* {
+    font-family: 'Roboto Slab', serif;
+}
+
+.app-name {
+    font-size: x-large;
+}
+
+.add-button {
+    height: 15%;
+    fill: #ffc300;
+}
+
+.nav-link {
+    color: black !important;
+}
+
+.active{
+    /* -webkit-text-stroke: 0.5px black; */
+    font-weight: bold;
+    color: white !important;
+    background-color: #ffc300 !important;
+    border-style: solid !important;
+    border-color: #ffc300 !important;
+}
+
+.col-title {
+    padding-left: 0.25em !important;
+    padding-right: 0.25em !important;
+
+}
+
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.5s ease;
+}
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+
+.btn-add-photo {
+    background-color: #ffc300 !important;
+}
+
+.button-yellow {
+    background-color: #ffc300 !important;
+}
+
+
+/* .active {
+    color: red;
+} */
+
+/* .home-screen {
+    padding: ;
+} */
