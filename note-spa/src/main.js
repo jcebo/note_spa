@@ -8,6 +8,7 @@ import { h } from 'vue';
 import { getFirestore } from "firebase/firestore"; 
 import { getAuth } from 'firebase/auth';
 import { getStorage } from "firebase/storage";
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 
   // Import the functions you need from the SDKs you need
 //import { getAnalytics } from "firebase/analytics";
