@@ -15,7 +15,9 @@ const router = createRouter({
             path: "/home", component: () => import("../views/Home.vue"), meta: {
                 requiresAuth: true,
             }
-        },                     
+        },
+        { path: "/add-note", component: () => import("../views/AddNote.vue") },
+
     ],
 });
 
