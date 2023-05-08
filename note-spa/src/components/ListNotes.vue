@@ -18,26 +18,32 @@ export default {
     console.log("show notes");
     const auth = getAuth();
 
-    const querySnapshot = await getDocs(
-      collection(db, `users/${auth.currentUser.uid}/notes`)
-    );
 
-    querySnapshot.forEach(async (doc) => {
-      console.log(`${doc.id} => ${doc.data()}`);
-      const noteData = doc.data();
-      if (noteData.ImageURL) {
-        const storageRef = ref(getStorage(), noteData.ImageURL);
-        const imageURL = await getDownloadURL(storageRef);
-        noteData.ImageURL = imageURL;
-      }
-      this.text_notes.push(noteData);
+        const querySnapshot = await getDocs(collection(db, `users/${auth.currentUser.uid}/notes`));
+        
+        querySnapshot.forEach(async (doc) => {
+            console.log(`${doc.id} => ${doc.data()}`);
+            const noteData = doc.data();
+            noteData.noteId = doc.id;
+            if (noteData.ImageURL) {
+              const storageRef = ref(getStorage(), noteData.ImageURL);
+              const imageURL = await getDownloadURL(storageRef);
+              noteData.ImageURL = imageURL;
+            }
+            this.text_notes.push(noteData);
 
-      console.log("noteData:");
-      console.log(noteData);
-    });
-    console.log("end of showing notes");
-    //console.log(data)
-    console.log("????????????????????????????");
+
+
+        });
+        console.log("end of showing notes")
+    },
+    methods: {
+        first20: function (string) {
+            let split_string = string.split(' ');
+            let result = split_string.slice(0, 20).join(' ')
+            if (split_string.length > 20) {
+                result = result + ' ...'
+            }
 
     this.displayedNotes = this.text_notes;
   },
@@ -84,8 +90,9 @@ export default {
             </button>
         </div>
             <TransitionGroup name="list">
+
                 <div class="card mb-1" v-for="note in filteredNotes" :key="note.Title">
-                    <router-link to="{name:'note', params:{ id: note.id}}">
+                    <router-link :to="'/notes/' + note.noteId">
                         <div class="card-body" style="text-align: justify;text-justify: inter-word;">
                             <h5 class="card-title">{{ note.Title }}</h5>
                             <img v-if="note.ImageURL" :src="note.ImageURL" alt="Note Image">
