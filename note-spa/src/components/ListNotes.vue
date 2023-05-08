@@ -13,6 +13,7 @@ export default {
       showImages: true,
       showText: true,
       showRecordings: true,
+      searchInput: "",
     };
   },
   async mounted() {
@@ -52,6 +53,10 @@ export default {
       console.log("first20 split result" + result);
       return result;
     },
+    updateSearchInput() {
+
+      this.searchInput = event.target.value;
+    },
   },
   computed: {
     filteredNotes() {
@@ -60,7 +65,10 @@ export default {
           (note.ImageURL && this.showImages) ||
           (!note.ImageURL && this.showText) ||
           (note.RecordingURL && this.showRecordings)
+          
         );
+      }).filter((note)=>{
+        return note.Title.toLowerCase().includes(this.searchInput.toLowerCase());
       });
     },
   },
@@ -85,6 +93,9 @@ export default {
           <button class="btn btn-primary" @click="showRecordings = !showRecordings">
           {{ showRecordings ? "Ukryj notatki z nagraniami" : "Pokaż notatki z nagraniami" }}
           </button>
+      </div>
+      <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="Wyszukaj notatki" v-model="searchInput" @input="updateSearchInput">
       </div>
             <TransitionGroup name="list">
                 <div class="card mb-1" v-for="note in filteredNotes" :key="note.Title">
