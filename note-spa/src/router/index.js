@@ -17,6 +17,11 @@ const router = createRouter({
             }
         },
         { path: "/add-note", component: () => import("../views/AddNote.vue") },
+        {
+            path: "/notes/:id", name:'note', component: () => import("../views/NoteView-screen.vue"), meta: {
+                requiresAuth: true,
+            }
+        },
 
     ],
 });
