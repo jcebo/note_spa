@@ -21,6 +21,7 @@ export default {
         querySnapshot.forEach(async (doc) => {
             console.log(`${doc.id} => ${doc.data()}`);
             const noteData = doc.data();
+            noteData.noteId = doc.id;
             if (noteData.ImageURL) {
               const storageRef = ref(getStorage(), noteData.ImageURL);
               const imageURL = await getDownloadURL(storageRef);
@@ -33,8 +34,6 @@ export default {
 
         });
         console.log("end of showing notes")
-        //console.log(data)
-        console.log("????????????????????????????")
     },
     methods: {
         first20: function (string) {
@@ -56,9 +55,7 @@ export default {
         <div class="container-flex" v-if="text_notes">
             <TransitionGroup name="list">
                 <div class="card mb-1" v-for="note in text_notes" :key="note.Title">
-                    <router-link to="{name:'note', params:{ id: note.id}}">
-                    <!-- <router-link to="{name:'note'}" params="{ id: note.id}"> -->
-                    <!-- <router-link :to="{name:'note', params:{ id: note.id}}"></router-link> -->
+                    <router-link :to="'/notes/' + note.noteId">
                         <div class="card-body" style="text-align: justify;text-justify: inter-word;">
                             <h5 class="card-title">{{ note.Title }}</h5>
                             <img v-if="note.ImageURL" :src="note.ImageURL" alt="Note Image">
