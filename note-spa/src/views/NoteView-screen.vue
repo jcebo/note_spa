@@ -12,6 +12,7 @@ export default {
       uid: auth.currentUser.uid,
       title: null,
       content: null,
+      ImageURL: null,
     };
   },
   async mounted() {
@@ -25,6 +26,7 @@ export default {
 
       this.title = docSnap.data().Title;
       this.content = docSnap.data().Content;
+      this.ImageURL = docSnap.data().ImageURL;
     } else {
       // doc.data() will be undefined in this case
       console.log("No such document!");
@@ -58,6 +60,7 @@ export default {
         <div class="card mb-1">
       <div class="card-body" style="text-align: justify;text-justify: inter-word;">
         <h5 class="card-title">{{ title }}</h5>
+        <img :src="ImageURL" alt="image" />
         <p class="card-text" style="color:grey;">
           {{content}}
         </p>
