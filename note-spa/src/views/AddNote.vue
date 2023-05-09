@@ -29,14 +29,16 @@
 import {getAuth} from "firebase/auth";
 import {db} from "../main.js";
 import {addDoc, collection} from "firebase/firestore";
-import { getStorage, ref, uploadBytes } from "firebase/storage";
+import { getStorage, ref, uploadBytes, getDownloadURL} from "firebase/storage";
+import { doc, updateDoc } from "firebase/firestore";
 import { useRouter } from "vue-router";
 import { nextTick } from 'vue';
 
 export default {
     data() {
         return {
-            photoUploaded: false
+            photoUploaded: false,
+            docRef:null
         }
     },
     methods: {
@@ -44,7 +46,7 @@ export default {
             await nextTick();
             this.photoUploaded = document.getElementById("photo-upload").files.length != 0
         },
-        addNote(submitEvent) {
+        async addNote(submitEvent) {
             if (this.noteTitle.length > 0 && this.noteContent.length > 0) {                
                 const auth = getAuth();
                 console.log(auth.currentUser.uid);
@@ -52,20 +54,41 @@ export default {
                 console.log(dateOfCreation)
                 const noteRef = collection(db, `users/${auth.currentUser.uid}/notes`);
                 console.log("noteRef to "+noteRef)
-                addDoc(noteRef, {
-                    Title: this.noteTitle,
+                await addDoc(noteRef, {
                     Content: this.noteContent,
-                    Date: dateOfCreation                     
-                }).then(() => {
+                    Date: dateOfCreation,
+                    ImageURL:'',
+                    Title: this.noteTitle,
+                    
+                    
+                    
+
+                }).then(async(docRef) => {
                     if (this.photoUploaded) {                        
                         const file = document.getElementById("photo-upload").files[0];                    
                         const storage = getStorage();
                         console.log("storage to "+storage)                    
                         const fileRef = ref(storage, `gs://note-spa.appspot.com/users/${auth.currentUser.uid}/${file.name}`);                        
                         console.log("fileRef to "+fileRef)
-                        uploadBytes(fileRef, file).then(() => {
+                        await uploadBytes(fileRef, file).then(async() => {
                             console.log('Uploaded a blob or file!');
+                             await getDownloadURL(fileRef).then((url) => {
+                                console.log(typeof url);
+                                console.log(url);
+                                const updateObj = {
+                                    ImageURL: url
+                                };
+                                const noteDoc = doc(db, `users/${auth.currentUser.uid}/notes`, docRef.id);
+                        updateDoc(noteDoc, updateObj).then(() =>{
+                            console.log('Photo URL updated successfully!');
                             this.$router.push('/home');
+                                });
+                                // updateDoc(noteRef, {ImageURL: url.toString()}).then(() => {
+                                //     console.log('Photo URL updated successfully!');
+                                //     this.$router.push('/home');
+                                // });
+                            });
+
                         });
                     } else {
                         this.$router.push('/home');
