@@ -9,7 +9,7 @@
 
             <br>
             <label class="btn btn-add-photo">
-                <i class="bi bi-camera"></i> Add photo<input @change="checkIfPhotoUploaded()"
+                <i class="bi bi-camera"></i> Dodaj zdjęcie<input @change="checkIfPhotoUploaded()"
                     onchange="document.getElementById('photo').src = window.URL.createObjectURL(this.files[0])"
                     type="file" style="display: none;" id="photo-upload" name="image" accept="image/*">
             </label>
@@ -57,13 +57,18 @@ export default {
                 await addDoc(noteRef, {
                     Content: this.noteContent,
                     Date: dateOfCreation,
+
                     ImageURL:'',
                     Title: this.noteTitle,
+                    isShared: false     
                     
                     
                     
 
                 }).then(async(docRef) => {
+                    
+         
+
                     if (this.photoUploaded) {                        
                         const file = document.getElementById("photo-upload").files[0];                    
                         const storage = getStorage();

@@ -37,10 +37,11 @@ export default {
       deleteDoc(doc(db, `users/${this.uid}/notes/${this.id}`)).then(() => {
         this.$router.push('/home');
       })
-      
-    }
+    },
+    shareNote: function(){ 
+        this.$router.push(`/share/${this.id}`);
+        }
   },
-
 };
 </script>
  
@@ -50,7 +51,8 @@ export default {
       <button @click.prevent="deleteNote" style="color: transparent; background-color: transparent; border-color: transparent" type="submit">
         <img style="width: 30px" src = "../assets/trash-bin.svg"/>
       </button>
-      <button @click.prevent="deleteNote" style="color: transparent; background-color: transparent; border-color: transparent" type="submit">
+      <button @click="shareNote" style="color: transparent; background-color: transparent; border-color: transparent" type="submit">
+
         <img style="width: 30px" src = "../assets/share.svg"/>
       </button>
         <div class="card mb-1">
