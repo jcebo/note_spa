@@ -22,11 +22,13 @@ export default {
 
 <template>
     <div class="container-fluid">       
-        <ListNotes />
+        
 
         <router-link class="nav-link" to="add-note" active-class="active">
             <button class="btn btn-primary mt-3">Dodaj notatkę</button>
         </router-link>
+
+        <ListNotes />
         
     </div>
 </template>

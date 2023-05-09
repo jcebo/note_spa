@@ -63,8 +63,9 @@ export default {
       return this.text_notes.filter((note) => {
         return (
           (note.ImageURL && this.showImages) ||
-          (!note.ImageURL && this.showText) ||
-          (note.RecordingURL && this.showRecordings)
+          (!note.ImageURL && this.showText) 
+          // ||
+          // (note.RecordingURL && this.showRecordings)
           
         );
       }).filter((note)=>{
@@ -90,9 +91,9 @@ export default {
           <button class="btn btn-primary me-2" @click="showText = !showText">
           {{ showText ? "Ukryj notatki z tekstem" : "Pokaż notatki z tekstem" }}
           </button>
-          <button class="btn btn-primary" @click="showRecordings = !showRecordings">
+          <!-- <button class="btn btn-primary" @click="showRecordings = !showRecordings">
           {{ showRecordings ? "Ukryj notatki z nagraniami" : "Pokaż notatki z nagraniami" }}
-          </button>
+          </button> -->
       </div>
       <div class="input-group mb-3">
         <input type="text" class="form-control" placeholder="Wyszukaj notatki" v-model="searchInput" @input="updateSearchInput">
