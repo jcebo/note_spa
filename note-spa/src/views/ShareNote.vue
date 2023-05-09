@@ -1,7 +1,7 @@
 
 <script>
 
-import { doc, getDoc, deleteDoc } from "firebase/firestore";
+import { doc, getDoc, deleteDoc, updateDoc } from "firebase/firestore";
 import { db, auth } from "../main.js";
 
 export default {
@@ -26,9 +26,16 @@ export default {
   methods: {
     
     async shareNoteLink() {
-      console.log("executing sharenote method"+this.id)
-      const noteRef = doc(db, `users/${auth.currentUser.uid}/notes`, this.noteId);
-      await updateDoc(noteRef, { isShared: true });
+      const currentURL = window.location.href
+      const noteID = currentURL.slice(-20)
+      const updateObj = {isShared: true};
+      const noteRef = doc(db, `users/${auth.currentUser.uid}/notes`, noteID);            
+      updateDoc(noteRef, updateObj).then(() =>{
+        console.log('Changed bool successfully!');
+        //this.$router.push('/home');
+      });
+      const currentHost = window.location.host
+      navigator.clipboard.writeText(currentHost+'/sharedNote/'+auth.currentUser.uid+'/'+noteID);
     },
     shareByEmail() {
       // Sharing note by mail logic here
@@ -55,67 +62,7 @@ export default {
         <div>Skopiuj link</div>
     </button>
 
-    <hr style="color: orange"/>
-    <h5 class="card-text" style="color:gray; align-self: left;">
-        Udostępnij innemu użytkownikowi
-    </h5> 
-    <div>
-        <input class="col-sm-4" type="text" placeholder="Enter the email" v-model="email" />
-        <button @click.prevent="shareByEmail" style="color: gray; background-color: orange; border-color: transparent" type="submit">
-            <div>Udostępnij</div>
-        </button>
-    </div>
-
-    <hr style="color: orange"/>
-    <h5 class="card-text" style="color:gray;">
-        Udostępnione linki
-    </h5> 
-    <div>
-        <table>
-        <thead>
-            <tr>
-            <th>Link do notatki</th>
-            <th>Usuń</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr v-for="(note, index) in sharedLinksList" :key="index">
-            <td>{{ note.link }}</td>
-            <td>
-                <button @click.prevent="deleteSharedLink" style="color: transparent; background-color: transparent; border-color: transparent" type="submit">
-                <img style="width: 30px" src="../assets/trash-bin.svg"/>
-                </button>
-            </td>
-            </tr>
-        </tbody>
-        </table>
-    </div>
-
-
-    <hr style="color: orange"/>
-    <h5 class="card-text" style="color:gray;">
-        Udostępnione innym użytkownikom
-    </h5> 
-    <div>
-        <table>
-        <thead>
-            <tr>
-            <th>Email użytkownika</th>
-            <th>Usuń</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr v-for="(note, index) in sharedUsersList" :key="index">
-            <td>{{ note.link }}</td>
-            <td>
-                <button @click.prevent="deleteSharedUser" style="color: transparent; background-color: transparent; border-color: transparent" type="submit">
-                <img style="width: 30px" src="../assets/trash-bin.svg"/>
-                </button>
-            </td>
-            </tr>
-        </tbody>
-        </table>
-    </div>
+  
 
     <hr style="color: orange"/>
 
