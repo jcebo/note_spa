@@ -9,6 +9,9 @@ import { getFirestore } from "firebase/firestore";
 import { getAuth } from 'firebase/auth';
 import { getStorage } from "firebase/storage";
 
+
+
+
   // Import the functions you need from the SDKs you need
 //import { getAnalytics } from "firebase/analytics";
 // TODO: Add SDKs for Firebase products that you want to use
@@ -18,6 +21,11 @@ import { getStorage } from "firebase/storage";
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 
 //const analytics = getAnalytics(app);
+
+// const express = require("express");
+// const app = express();
+// const functions = require('firebase-functions');
+// const admin = require('firebase-admin');
 
 
 const firebaseConfig = {
@@ -48,8 +56,6 @@ const app = createApp({
 });
 app.use(router)
 app.mount('#app')
-
-
 
 // export function getNotes(){
 //   getDocs(collection(db, "test-notes-collection")).then((querySnapshot) => {
