@@ -9,7 +9,7 @@
 
             <br>
             <label class="btn btn-add-photo">
-                <i class="bi bi-camera"></i> Add photo<input @change="checkIfPhotoUploaded()"
+                <i class="bi bi-camera"></i> Dodaj zdjęcie<input @change="checkIfPhotoUploaded()"
                     onchange="document.getElementById('photo').src = window.URL.createObjectURL(this.files[0])"
                     type="file" style="display: none;" id="photo-upload" name="image" accept="image/*">
             </label>
