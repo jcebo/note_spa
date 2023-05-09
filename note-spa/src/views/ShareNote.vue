@@ -25,17 +25,18 @@ export default {
   },
   methods: {
     
-    shareNoteLink() {
-      // Delete note logic here
+    async shareNoteLink() {
+      const noteRef = doc(db, "notes", this.noteId);
+      await updateDoc(noteRef, { isShared: true });
     },
     shareByEmail() {
-      // Delete note logic here
+      // Sharing note by mail logic here
     },
     deleteSharedLink() {
-      // Delete note logic here
+      // Deleting shared note link logic here
     },
     deleteSharedUser() {
-      // Delete note logic here
+      // Deleting shared note for user logic here
     }
     
     
@@ -47,33 +48,33 @@ export default {
 <template>
   <div class="container" style="text-align: left;">
     <h3  style="color:orange; text-justify: inter-word;">
-        Share note
+        Udostępnij notatkę
     </h3>  
     <button @click.prevent="shareNoteLink" style="color: gray; background-color: orange; border-color: transparent" type="submit">
-        <div>Coppy a link</div>
+        <div>Skopiuj link</div>
     </button>
 
     <hr style="color: orange"/>
     <h5 class="card-text" style="color:gray; align-self: left;">
-        Share with other user
+        Udostępnij innemu użytkownikowi
     </h5> 
     <div>
         <input class="col-sm-4" type="text" placeholder="Enter the email" v-model="email" />
         <button @click.prevent="shareByEmail" style="color: gray; background-color: orange; border-color: transparent" type="submit">
-            <div>share</div>
+            <div>Udostępnij</div>
         </button>
     </div>
 
     <hr style="color: orange"/>
     <h5 class="card-text" style="color:gray;">
-        Shared links
+        Udostępnione linki
     </h5> 
     <div>
         <table>
         <thead>
             <tr>
-            <th>Note Link</th>
-            <th>Delete</th>
+            <th>Link do notatki</th>
+            <th>Usuń</th>
             </tr>
         </thead>
         <tbody>
@@ -92,14 +93,14 @@ export default {
 
     <hr style="color: orange"/>
     <h5 class="card-text" style="color:gray;">
-        Shared with other users
+        Udostępnione innym użytkownikom
     </h5> 
     <div>
         <table>
         <thead>
             <tr>
-            <th>User email</th>
-            <th>Delete</th>
+            <th>Email użytkownika</th>
+            <th>Usuń</th>
             </tr>
         </thead>
         <tbody>
