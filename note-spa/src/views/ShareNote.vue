@@ -26,7 +26,8 @@ export default {
   methods: {
     
     async shareNoteLink() {
-      const noteRef = doc(db, "notes", this.noteId);
+      console.log("executing sharenote method"+this.id)
+      const noteRef = doc(db, `users/${auth.currentUser.uid}/notes`, this.noteId);
       await updateDoc(noteRef, { isShared: true });
     },
     shareByEmail() {

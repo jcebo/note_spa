@@ -27,7 +27,7 @@ const router = createRouter({
                 requiresAuth: true,
             }
         },{
-            path: "/shared/:id", name:'sharednote', component: () => import("../views/DisplaySharedNote.vue"), meta: {
+            path: "/sharedNote/:userid/:id", name:'sharednote', component: () => import("../views/DisplaySharedNote.vue"), meta: {
                 requiresAuth: true,
             }
         },

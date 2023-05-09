@@ -103,7 +103,7 @@ export default {
                   <router-link :to="'/notes/' + note.noteId">
                         <div class="card-body" style="text-align: justify;text-justify: inter-word;">
                             <h5 class="card-title">{{ note.Title }}</h5>
-                            <img v-if="note.ImageURL" :src="note.ImageURL" alt="Note Image">
+                            <img v-if="note.ImageURL" :src="note.ImageURL" alt="Note Image" class="image-preview" style="max-width: 15%">
                             <p style="color:grey;" class="card-text">{{ first20(note.Content)}}</p>
                         </div>
                     </router-link>
