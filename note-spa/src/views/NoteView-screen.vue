@@ -59,11 +59,11 @@ export default {
       </button>
         <div class="card mb-1">
       <div class="card-body" style="text-align: justify;text-justify: inter-word;">
-        <h5 class="card-title">{{ title }}</h5>
-        <img v-if="ImageURL" :src="ImageURL" alt="image" />
+        <h5 class="card-title">{{ title }}</h5>        
         <p class="card-text" style="color:grey;">
           {{content}}
         </p>
+        <img v-if="ImageURL" :src="ImageURL" alt="image" style="max-width: 50%"/>
       </div>
     </div>
   </div>

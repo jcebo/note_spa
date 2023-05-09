@@ -84,9 +84,9 @@ export default {
                                     ImageURL: url
                                 };
                                 const noteDoc = doc(db, `users/${auth.currentUser.uid}/notes`, docRef.id);
-                        updateDoc(noteDoc, updateObj).then(() =>{
-                            console.log('Photo URL updated successfully!');
-                            this.$router.push('/home');
+                                updateDoc(noteDoc, updateObj).then(() =>{
+                                    console.log('Photo URL updated successfully!');
+                                    this.$router.push('/home');
                                 });
                                 // updateDoc(noteRef, {ImageURL: url.toString()}).then(() => {
                                 //     console.log('Photo URL updated successfully!');
