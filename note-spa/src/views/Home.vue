@@ -21,9 +21,7 @@ export default {
 </script>
 
 <template>
-    <div class="container-fluid">
-        <p>Test home screen</p>
-
+    <div class="container-fluid">       
         <ListNotes />
 
         <router-link class="nav-link" to="add-note" active-class="active">
