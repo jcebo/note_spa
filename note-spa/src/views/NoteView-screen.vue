@@ -52,6 +52,7 @@ export default {
         <img style="width: 30px" src = "../assets/trash-bin.svg"/>
       </button>
       <button @click="shareNote" style="color: transparent; background-color: transparent; border-color: transparent" type="submit">
+
         <img style="width: 30px" src = "../assets/share.svg"/>
       </button>
         <div class="card mb-1">
