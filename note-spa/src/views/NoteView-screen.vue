@@ -50,6 +50,9 @@ export default {
       <button @click.prevent="deleteNote" style="color: transparent; background-color: transparent; border-color: transparent" type="submit">
         <img style="width: 30px" src = "../assets/trash-bin.svg"/>
       </button>
+      <button @click.prevent="deleteNote" style="color: transparent; background-color: transparent; border-color: transparent" type="submit">
+        <img style="width: 30px" src = "../assets/share.svg"/>
+      </button>
         <div class="card mb-1">
       <div class="card-body" style="text-align: justify;text-justify: inter-word;">
         <h5 class="card-title">{{ title }}</h5>
