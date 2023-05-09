@@ -50,7 +50,7 @@ export default {
       }
 
 
-      console.log("first20 split result" + result);
+      // console.log("first20 split result" + result);
       return result;
     },
     updateSearchInput() {

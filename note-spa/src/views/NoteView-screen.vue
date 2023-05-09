@@ -13,11 +13,14 @@ export default {
       title: null,
       content: null,
       ImageURL: null,
+      rec: null,
     };
   },
   async mounted() {
     const docRef = doc(db, "users", `${this.uid}`, "notes", `${this.id}`);
     const docSnap = await getDoc(docRef);
+    const noteDoc = doc(db, `users/${auth.currentUser.uid}/notes`, docRef.id);
+
 
     // this.note =  docSnap;
 
@@ -31,6 +34,29 @@ export default {
       // doc.data() will be undefined in this case
       console.log("No such document!");
     }
+    const storageRef = ref(storage, `users/${this.uid}/recordings/${this.id}`);
+    getDownloadURL(storageRef).then((url) => {
+      const xhr = new XMLHttpRequest();
+      xhr.responseType = "blob";
+      xhr.onload = () => {
+        const clipContainer = document.createElement("article");
+        const blob = xhr.response;
+        const soundClips = document.querySelector(".sound-clips");
+        soundClips.innerHTML = "";
+        const audio = document.createElement("audio");
+        audio.controls = true;
+        clipContainer.classList.add("clip");
+        audio.setAttribute("controls", "");
+        clipContainer.appendChild(audio);
+        soundClips.appendChild(clipContainer);
+        const audioURL = window.URL.createObjectURL(blob);
+        audio.src = audioURL;
+      };
+      xhr.open("GET", url);
+      xhr.send();
+    }).catch((error) => {
+      console.log(error);
+    });
   },
   methods: {
     deleteNote: function(){      
@@ -66,5 +92,14 @@ export default {
         </p>
       </div>
     </div>
+    <h1>{{id}}</h1>
+    <section class="main-controls">
+      <div id="buttons"></div>
+    </section>
+    <button @click.prevent="deleteRecording" style="color: transparent; background-color: transparent; border-color: transparent" type="submit">
+      <img style="width: 30px" src="../assets/trash-bin.svg" />
+    </button>
+
+    <section class="sound-clips"></section>
   </div>
 </template>
