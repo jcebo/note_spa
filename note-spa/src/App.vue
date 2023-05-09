@@ -8,7 +8,7 @@
           <img style="height: 40px" src="./assets/note.svg" alt="NoteAppLogo" />
         </span>
         <button v-if="isLoggedIn" class="btn right" @click="handleLogOut">
-          Log-out
+          Wyloguj się
         </button>
       </h1>
           <router-view />

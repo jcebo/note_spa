@@ -1,10 +1,10 @@
 <template>
     <div class ='container'>
-        <p>Enter your note</p>
+        <p>Edytuj notatkę</p>
         <form class = 'row mb-3' @submit.prevent="addNote">
-            <input style="width: 90%%; height: 5vh" class="form-control row mb-3" v-model="noteTitle" type="text" placeholder="Title" required>
+            <input style="width: 90%%; height: 5vh" class="form-control row mb-3" v-model="noteTitle" type="text" placeholder="Tytuł" required>
             <br>
-            <textarea style="width: 100%; height: 200px" v-model="noteContent" class="row mb-3 noteContent form-control" placeholder="Text" required>
+            <textarea style="width: 100%; height: 200px" v-model="noteContent" class="row mb-3 noteContent form-control" placeholder="Wprowadź tekst" required>
             </textarea>
 
             <br>
