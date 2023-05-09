@@ -55,7 +55,8 @@ export default {
                 addDoc(noteRef, {
                     Title: this.noteTitle,
                     Content: this.noteContent,
-                    Date: dateOfCreation                     
+                    Date: dateOfCreation,
+                    isShared: false                     
                 }).then(() => {
                     if (this.photoUploaded) {                        
                         const file = document.getElementById("photo-upload").files[0];                    
