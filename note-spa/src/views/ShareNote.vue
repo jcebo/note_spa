@@ -26,8 +26,26 @@ export default {
   methods: {
     
     async shareNoteLink() {
-      const noteRef = doc(db, "notes", this.noteId);
+
+      var noteId = window.location.pathname;
+      noteId = noteId.split('/').pop();
+      console.log("this.noteId:")
+      console.log(noteId)
+
+
+      try {
+        await navigator.clipboard.writeText(window.location.href.replace("share", "shared"));
+        alert('link skopiowano do schowka');
+      } catch($e) {
+        alert('nie można skopiować');
+      }
+      
+      
+      const noteRef = getDoc(doc(db, "notes", noteId));
       await updateDoc(noteRef, { isShared: true });
+
+
+      
     },
     shareByEmail() {
       // Sharing note by mail logic here
@@ -38,7 +56,6 @@ export default {
     deleteSharedUser() {
       // Deleting shared note for user logic here
     }
-    
     
   }
 };

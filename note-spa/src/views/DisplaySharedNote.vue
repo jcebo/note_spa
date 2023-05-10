@@ -6,14 +6,16 @@
   export default {
     data() {
       return {
-        title: "",
-        content: "",
+        title: null,
+        content: null,
       };
     },
     async mounted() {
       const id = this.$route.params.id;
-      const querySnapshot = await getDoc(doc(db, "notes", id));
-      const note = querySnapshot.data();
+      console.log(id)
+      //user id just for testing
+      const querySnapshot = doc(db, "users", "mFqJBkr7DiWUbXqd2RdRKdGoMQk1","notes", id);
+      const note = await getDoc(querySnapshot);
       
       if (!note) {
         console.log("No such note");
@@ -24,6 +26,9 @@
         console.log("Note not shared with user");
         return;
       }
+
+      console.log(note.title)
+      console.log(note)
   
       this.title = note.title;
       this.content = note.content;
