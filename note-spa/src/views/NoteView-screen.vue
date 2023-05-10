@@ -1,7 +1,43 @@
+<template>
+  <div class="container">
+    <button
+      @click.prevent="deleteNote"
+      style="color: transparent; background-color: transparent; border-color: transparent"
+      type="submit"
+    >
+      <img style="width: 30px" src="../assets/trash-bin.svg" />
+    </button>
+    <button
+      @click="shareNote"
+      style="color: transparent; background-color: transparent; border-color: transparent"
+      type="submit"
+    >
+      <img style="width: 30px" src="../assets/share.svg" />
+    </button>
+    <button v-if="!editing" @click="startEditing" style="color: transparent; background-color: transparent; border-color: transparent">
+      <img style="width: 30px" src = "../assets/pencil-icon.svg"/>
+    </button>
+    <button v-if="editing" @click="saveChanges" style="color: transparent; background-color: transparent; border-color: transparent">
+      <img style="width: 30px" src = "../assets/save-icon.svg"/>
+    </button>
+
+    <div class="card mb-1">
+      <div class="card-body" style="text-align: justify;text-justify: inter-word;">
+        <h5 class="card-title">
+          <input v-if="editing" v-model="title" />
+          <span v-else>{{ title }}</span>
+        </h5>
+        <p class="card-text" style="color:grey;">
+          <textarea v-if="editing" v-model="content"></textarea>
+          <span v-else>{{ content }}</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</template>
 
 <script>
-
-import { doc, getDoc, deleteDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db, auth } from "../main.js";
 export default {
   data() {
@@ -12,13 +48,12 @@ export default {
       uid: auth.currentUser.uid,
       title: null,
       content: null,
+      editing: false,
     };
   },
   async mounted() {
     const docRef = doc(db, "users", `${this.uid}`, "notes", `${this.id}`);
     const docSnap = await getDoc(docRef);
-
-    // this.note =  docSnap;
 
     if (docSnap.exists()) {
       console.log("Document data:", docSnap.data());
@@ -26,7 +61,6 @@ export default {
       this.title = docSnap.data().Title;
       this.content = docSnap.data().Content;
     } else {
-      // doc.data() will be undefined in this case
       console.log("No such document!");
     }
   },
@@ -38,30 +72,24 @@ export default {
         this.$router.push('/home');
       })
     },
-    shareNote: function(){ 
-        this.$router.push(`/share/${this.id}`);
-        }
+    shareNote: function () {
+      this.$router.push(`/share/${this.id}`);
+    },
+    startEditing: function () {
+      this.editing = true;
+    },
+    saveChanges: function () {
+      updateDoc(doc(db, `users/${this.uid}/notes/${this.id}`), {
+        Title: this.title,
+        Content: this.content,
+      })
+        .then(() => {
+          this.editing = false;
+        })
+        .catch((error) => {
+          console.error("Error updating document: ", error);
+        });
+    },
   },
 };
 </script>
- 
-<template>
-
-  <div class="container">       
-      <button @click.prevent="deleteNote" style="color: transparent; background-color: transparent; border-color: transparent" type="submit">
-        <img style="width: 30px" src = "../assets/trash-bin.svg"/>
-      </button>
-      <button @click="shareNote" style="color: transparent; background-color: transparent; border-color: transparent" type="submit">
-
-        <img style="width: 30px" src = "../assets/share.svg"/>
-      </button>
-        <div class="card mb-1">
-      <div class="card-body" style="text-align: justify;text-justify: inter-word;">
-        <h5 class="card-title">{{ title }}</h5>
-        <p class="card-text" style="color:grey;">
-          {{content}}
-        </p>
-      </div>
-    </div>
-  </div>
-</template>
