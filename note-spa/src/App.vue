@@ -3,13 +3,15 @@
 
     <div class="container">
       <h1>
-        <span style="color: black"
-          >NoteApp
-          <img style="height: 40px" src="./assets/note.svg" alt="NoteAppLogo" />
-        </span>
-        <button v-if="isLoggedIn" class="btn right" @click="handleLogOut">
-          Wyloguj się
-        </button>
+        <router-link :to="'/home'" style="text-decoration: none; color: inherit;">
+          <span style="color: black"
+            >NoteApp
+            <img style="height: 40px" src="./assets/note.svg" alt="NoteAppLogo" />
+          </span>
+          <button v-if="isLoggedIn" class="btn right" @click="handleLogOut">
+            Wyloguj się
+          </button>
+        </router-link>
       </h1>
           <router-view />
 
